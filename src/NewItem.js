@@ -13,6 +13,10 @@ class NewItem extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  shouldComponentUpdate(newProp, newState) {
+    return newState.value !== this.state.value;
+  }
+
   handleChange(event: Event) {
     const { target } = event;
     if (target instanceof HTMLInputElement) {

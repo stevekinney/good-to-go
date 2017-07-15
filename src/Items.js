@@ -13,6 +13,10 @@ class Items extends Component {
     this.updateSearchTerm = this.updateSearchTerm.bind(this);
   }
 
+  shouldComponentUpdate(newProps) {
+    return newProps.items !== this.props.items;
+  }
+
   updateSearchTerm(event) {
     const searchTerm = event.target.value.toLowerCase();
     this.setState({

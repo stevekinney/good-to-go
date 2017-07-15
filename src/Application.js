@@ -29,11 +29,22 @@ const calculateTimeLeft = () => {
   return `in ${minutes} minute(s) and ${seconds} second(s)`;
 };
 
+const filterUnpackedItems = items => items.filter(item => !item.packed);
+const filterPackedItems = items => items.filter(item => item.packed);
+const filterItems = (items) => {
+  const packedItems = filterPackedItems(items);
+  const unpackedItems = filterUnpackedItems(items);
+  return {
+    packedItems,
+    unpackedItems,
+  };
+};
+
 class Application extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: defaultState,
+      ...filterItems(defaultState),
       timeLeft: calculateTimeLeft(),
     };
 
@@ -45,7 +56,9 @@ class Application extends Component {
 
   componentDidMount() {
     this.countDownInterval = setInterval(() => {
-      this.setState({ timeLeft: calculateTimeLeft() });
+      const { timeLeft } = this.state;
+      const newTimeLeft = calculateTimeLeft();
+      if (timeLeft !== newTimeLeft) this.setState({ timeLeft: newTimeLeft });
     }, 500);
   }
 
@@ -54,7 +67,7 @@ class Application extends Component {
   }
 
   addItem(item) {
-    this.setState({ items: [item, ...this.state.items] });
+    this.setState({ unpackedItems: [item, ...this.state.unpackedItems] });
   }
 
   removeItem(item) {
@@ -73,9 +86,7 @@ class Application extends Component {
   }
 
   render() {
-    const { items } = this.state;
-    const unpackedItems = items.filter(item => !item.packed);
-    const packedItems = items.filter(item => item.packed);
+    const { packedItems, unpackedItems } = this.state;
 
     return (
       <div className="Application">
