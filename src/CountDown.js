@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const CountDown = ({ timeLeft }) => (
   <div className="CountDown">
-    This plane leaves {timeLeft}.
+    The Lyft will be here in about {timeLeft}.
   </div>
 );
 
