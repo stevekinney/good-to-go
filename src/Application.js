@@ -48,7 +48,7 @@ class Application extends Component {
       timeLeft: calculateTimeLeft(),
     };
 
-    this.addItem = this.addItem.bind(this);
+    // this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.markAsPacked = this.markAsPacked.bind(this);
     this.markAllAsUnpacked = this.markAllAsUnpacked.bind(this);
@@ -90,7 +90,7 @@ class Application extends Component {
 
     return (
       <div className="Application">
-        <NewItem onSubmit={this.addItem} />
+        <NewItem onSubmit={item => this.addItem(item)} />
         <CountDown {...this.state} />
         <Items
           title="Unpacked Items"
