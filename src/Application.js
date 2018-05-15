@@ -12,8 +12,7 @@ class Application extends Component {
 
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
-    this.markAsPacked = this.markAsPacked.bind(this);
-    this.markAllAsUnpacked = this.markAllAsUnpacked.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   addItem(item) {
@@ -26,15 +25,10 @@ class Application extends Component {
     });
   }
 
-  markAsPacked(item) {
+  toggle(item) {
     const otherItems = this.state.items.filter(other => other.id !== item.id);
     const updatedItem = { ...item, packed: !item.packed };
     this.setState({ items: [updatedItem, ...otherItems] });
-  }
-
-  markAllAsUnpacked() {
-    const items = this.state.items.map(item => ({ ...item, packed: false }));
-    this.setState({ items });
   }
 
   render() {
@@ -48,18 +42,15 @@ class Application extends Component {
         <Items
           title="Unpacked Items"
           items={unpackedItems}
-          onCheckOff={this.markAsPacked}
+          onCheckOff={this.toggle}
           onRemove={this.removeItem}
         />
         <Items
           title="Packed Items"
           items={packedItems}
-          onCheckOff={this.markAsPacked}
+          onCheckOff={this.toggle}
           onRemove={this.removeItem}
         />
-        <button className="button full-width" onClick={this.markAllAsUnpacked}>
-          Mark All As Unpacked
-        </button>
       </div>
     );
   }
